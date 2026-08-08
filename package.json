@@ -1,0 +1,21 @@
+{
+  "name": "crevodoc-converter",
+  "version": "1.0.0",
+  "description": "Online Document and Image Converter Platform",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mammoth": "^1.7.2",
+    "multer": "^1.4.5-lts.1",
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^22.10.0",
+    "sharp": "^0.33.4",
+    "uuid": "^9.0.1"
+  },
+  "author": "Antigravity",
+  "license": "ISC"
+}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All File Converters — CrevoDoc</title>
+  <meta name="description" content="Access all our free, fast online document, presentation, PDF, and image conversion tools in one place.">
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    .search-container {
+      max-width: 600px;
+      margin: 40px auto 20px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 1.05rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .search-input:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    }
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header -->
+  <div id="header-root"></div>
+
+  <section class="container" style="padding-top: 60px; padding-bottom: 80px;">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto 30px;">
+      <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 8px;">All Tools</h1>
+      <p style="color: var(--text-secondary);">Search and filter from our range of secure, fast online conversion tools.</p>
+    </div>
+
+    <!-- Search Input -->
+    <div class="search-container">
+      <input type="text" class="search-input" id="tool-search" placeholder="Search for tools... (e.g., pdf, word, png)" />
+    </div>
+
+    <div id="no-results-msg" class="no-results">
+      No tools match your search criteria.
+    </div>
+
+    <!-- Documents Category -->
+    <div class="category-section" id="cat-docs">
+      <h2 class="category-title">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        Documents
+      </h2>
+      <div class="tools-grid">
+        
+        <div class="tool-card" data-keywords="word doc docx to pdf convert">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge word">DOCX</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge pdf">PDF</span>
+          </div>
+          <h3>Word to PDF</h3>
+          <p>Convert your DOC and DOCX Word documents into professional, readable PDF files.</p>
+          <a href="/word-to-pdf" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+        <div class="tool-card" data-keywords="pdf to word doc docx convert editable">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge pdf">PDF</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge word">DOCX</span>
+          </div>
+          <h3>PDF to Word</h3>
+          <p>Convert PDF documents into editable Microsoft Word DOCX files.</p>
+          <a href="/pdf-to-word" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+        <div class="tool-card" data-keywords="txt plain text to pdf convert">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge txt">TXT</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge pdf">PDF</span>
+          </div>
+          <h3>TXT to PDF</h3>
+          <p>Convert plain text files (.txt) into structured PDF documents.</p>
+          <a href="/txt-to-pdf" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+        <div class="tool-card" data-keywords="txt plain text to word doc docx convert">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge txt">TXT</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge word">DOCX</span>
+          </div>
+          <h3>TXT to Word</h3>
+          <p>Convert plain text (.txt) files into editable Microsoft Word documents (.docx).</p>
+          <a href="/txt-to-word" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Presentations Category -->
+    <div class="category-section" id="cat-ppt">
+      <h2 class="category-title">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 12l3-3 3 3 4-4M8 21h8M12 17v4M3 4h18M4 4v13h16V4"/></svg>
+        Presentations
+      </h2>
+      <div class="tools-grid">
+
+        <div class="tool-card" data-keywords="powerpoint ppt pptx to pdf convert slides">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge ppt">PPTX</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge pdf">PDF</span>
+          </div>
+          <h3>PowerPoint to PDF</h3>
+          <p>Convert PowerPoint presentation slides (PPT/PPTX) into high-fidelity PDF documents.</p>
+          <a href="/ppt-to-pdf" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+        <div class="tool-card" data-keywords="pdf to powerpoint ppt pptx convert slides editable">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge pdf">PDF</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge ppt">PPTX</span>
+          </div>
+          <h3>PDF to PowerPoint</h3>
+          <p>Reconstruct PDF documents into editable Microsoft PowerPoint presentations.</p>
+          <a href="/pdf-to-ppt" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Images Category -->
+    <div class="category-section" id="cat-images">
+      <h2 class="category-title">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Images
+      </h2>
+      <div class="tools-grid">
+
+        <div class="tool-card" data-keywords="jpg jpeg to pdf convert multiple order rotate">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge img">JPG</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge pdf">PDF</span>
+          </div>
+          <h3>JPG to PDF</h3>
+          <p>Convert JPG/JPEG images to PDF. Supports multiple uploads, reordering, and rotations.</p>
+          <a href="/jpg-to-pdf" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+        <div class="tool-card" data-keywords="png to pdf convert multiple order rotate">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge img">PNG</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge pdf">PDF</span>
+          </div>
+          <h3>PNG to PDF</h3>
+          <p>Convert PNG images to PDF. Supports multiple uploads, reordering, and rotations.</p>
+          <a href="/png-to-pdf" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+        <div class="tool-card" data-keywords="pdf to jpg jpeg convert pages extract">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge pdf">PDF</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge img">JPG</span>
+          </div>
+          <h3>PDF to JPG</h3>
+          <p>Convert PDF pages into high-quality JPG images.</p>
+          <a href="/pdf-to-jpg" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+        <div class="tool-card" data-keywords="pdf to png convert pages extract">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge pdf">PDF</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge img">PNG</span>
+          </div>
+          <h3>PDF to PNG</h3>
+          <p>Convert PDF pages into high-quality PNG images.</p>
+          <a href="/pdf-to-png" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+        <div class="tool-card" data-keywords="jpg jpeg to png convert image">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge img">JPG</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge img">PNG</span>
+          </div>
+          <h3>JPG to PNG</h3>
+          <p>Convert JPG/JPEG images into transparent-friendly PNG format.</p>
+          <a href="/jpg-to-png" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+        <div class="tool-card" data-keywords="png to jpg jpeg convert image">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge img">PNG</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge img">JPG</span>
+          </div>
+          <h3>PNG to JPG</h3>
+          <p>Convert PNG images into standard JPG images.</p>
+          <a href="/png-to-jpg" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+        <div class="tool-card" data-keywords="webp to jpg jpeg convert image web">
+          <div class="tool-icon-wrapper">
+            <span class="file-badge img">WEBP</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="file-badge img">JPG</span>
+          </div>
+          <h3>WEBP to JPG</h3>
+          <p>Convert Google WEBP images into standard JPG images.</p>
+          <a href="/webp-to-jpg" class="btn btn-secondary">Use Tool</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Footer -->
+  <div id="footer-root"></div>
+
+  <script src="/assets/common.js"></script>
+  <script>
+    // Live Search Filter functionality
+    const searchInput = document.getElementById('tool-search');
+    const toolCards = document.querySelectorAll('.tool-card');
+    const categories = ['cat-docs', 'cat-ppt', 'cat-images'];
+    const noResultsMsg = document.getElementById('no-results-msg');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      let totalVisible = 0;
+
+      // Filter cards
+      toolCards.forEach(card => {
+        const keywords = card.getAttribute('data-keywords');
+        const title = card.querySelector('h3').innerText.toLowerCase();
+        const desc = card.querySelector('p').innerText.toLowerCase();
+
+        if (keywords.includes(query) || title.includes(query) || desc.includes(query)) {
+          card.style.display = 'flex';
+          totalVisible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Show/hide categories based on active children
+      categories.forEach(catId => {
+        const cat = document.getElementById(catId);
+        const visibleCards = cat.querySelectorAll('.tool-card[style="display: flex;"]');
+        const title = cat.querySelector('.category-title');
+        const grid = cat.querySelector('.tools-grid');
+
+        if (visibleCards.length === 0 && query !== '') {
+          title.style.display = 'none';
+          grid.style.display = 'none';
+        } else {
+          title.style.display = 'flex';
+          grid.style.display = 'grid';
+        }
+      });
+
+      // Handle no results state
+      if (totalVisible === 0) {
+        noResultsMsg.style.display = 'block';
+      } else {
+        noResultsMsg.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

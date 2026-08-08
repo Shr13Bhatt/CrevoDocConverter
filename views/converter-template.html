@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PAGE_TITLE}} — CrevoDoc</title>
+  <meta name="description" content="{{TOOL_DESC}} Fast, secure and free offline document converter.">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <!-- Dynamic Header -->
+  <div id="header-root"></div>
+
+  <div class="container">
+    <div class="converter-workspace">
+      
+      <!-- Title & Header -->
+      <div class="converter-title">
+        <h2>{{TOOL_TITLE}}</h2>
+        <p>{{TOOL_DESC}}</p>
+      </div>
+
+      <!-- Drag & Drop Upload Zone -->
+      <div class="upload-area" id="upload-area">
+        <span class="upload-icon">📤</span>
+        <h4>Drag & Drop your file here</h4>
+        <p>or <strong>Browse File</strong> from your computer</p>
+        <span class="supported-badge">Supported Formats: {{SUPPORTED_FORMATS}}</span>
+        <input type="file" id="file-input" class="hidden-file-input" accept="{{FILE_ACCEPT}}" {{INPUT_MULTIPLE}} />
+      </div>
+
+      <!-- Selected File Display -->
+      <div id="file-list-panel" class="file-list-panel" style="display: none;"></div>
+
+      <!-- Images Grid (only visible for multi-image uploads) -->
+      <div id="images-reorder-grid" class="images-reorder-grid" style="display: none;"></div>
+
+      <!-- Progress Panel -->
+      <div id="progress-panel" class="progress-panel" style="display: none;">
+        <div class="progress-label">
+          <span id="progress-text">Uploading...</span>
+        </div>
+        <div class="progress-bar-container">
+          <div id="progress-bar" class="progress-bar-fill"></div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div id="action-area" class="action-area" style="display: none;"></div>
+
+      <!-- Result Card -->
+      <div id="result-panel" class="result-panel" style="display: none;"></div>
+
+      <!-- Error Card -->
+      <div id="error-panel" class="error-panel" style="display: none;"></div>
+
+      <!-- Security / Auto-delete Privacy Message -->
+      <div class="security-message">
+        <span>🔒</span>
+        Your files are processed securely and automatically deleted after conversion.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- How It Works Section (Standard 3-step) -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="steps-container">
+        
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Upload</h3>
+          <p>Choose your file or drag it directly into the secure upload area. We support documents, slides, and images.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Convert</h3>
+          <p>Our modular backend conversion engine processes your files instantly, maintaining layout and formatting.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Download</h3>
+          <p>Download your converted file instantly. Files are kept secure and deleted automatically after 30 minutes.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Tool Specific FAQ Section -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-grid">
+        {{TOOL_FAQ}}
+        <div class="faq-item">
+          <div class="faq-question">Are my files kept private?</div>
+          <div class="faq-answer">Yes, we prioritize security. All operations run on a secure server, and files are permanently deleted 30 minutes after conversion. We do not keep logs or share copies.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Converters Section -->
+  <section class="container" style="padding-bottom: 80px;">
+    <h2 class="section-title" style="margin-bottom: 30px;">Related Tools</h2>
+    <div class="tools-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-bottom: 0;">
+      {{RELATED_TOOLS}}
+    </div>
+  </section>
+
+  <!-- Dynamic Footer -->
+  <div id="footer-root"></div>
+
+  <script src="/assets/common.js"></script>
+  <script src="/assets/converter.js"></script>
+</body>
+</html>
