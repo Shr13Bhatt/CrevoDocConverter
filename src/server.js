@@ -110,6 +110,44 @@ function runPythonScript(scriptName, args = []) {
   });
 }
 
+// Helper: Robust Puppeteer browser launcher supporting cloud and local environments
+async function launchPuppeteer() {
+  const launchArgs = [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-accelerated-2d-canvas',
+    '--no-first-run',
+    '--no-zygote',
+    '--single-process',
+    '--disable-gpu'
+  ];
+
+  const options = {
+    headless: 'new',
+    args: launchArgs
+  };
+
+  if (process.env.PUPPETEER_EXECUTABLE_PATH && fs.existsSync(process.env.PUPPETEER_EXECUTABLE_PATH)) {
+    options.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+  } else {
+    const candidatePaths = [
+      '/usr/bin/chromium',
+      '/usr/bin/chromium-browser',
+      '/usr/bin/google-chrome-stable',
+      '/usr/bin/google-chrome'
+    ];
+    for (const p of candidatePaths) {
+      if (fs.existsSync(p)) {
+        options.executablePath = p;
+        break;
+      }
+    }
+  }
+
+  return await puppeteer.launch(options);
+}
+
 // ----------------------------------------------------
 // UI Routes
 // ----------------------------------------------------
@@ -575,10 +613,7 @@ app.post('/api/convert/:toolType', async (req, res) => {
           </html>
         `;
         
-        const browser = await puppeteer.launch({
-          headless: 'new',
-          args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
+        const browser = await launchPuppeteer();
         const page = await browser.newPage();
         await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
         await page.pdf({
@@ -610,10 +645,7 @@ app.post('/api/convert/:toolType', async (req, res) => {
         await runPythonScript('pptx_to_html.py', [inputPath, tempHtmlPath, assetsDir]);
         
         // 2. Puppeteer loads the local HTML file and prints to PDF
-        const browser = await puppeteer.launch({
-          headless: 'new',
-          args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
+        const browser = await launchPuppeteer();
         const page = await browser.newPage();
         const fileUrl = url.pathToFileURL(tempHtmlPath).href;
         await page.goto(fileUrl, { waitUntil: 'networkidle0' });
@@ -682,10 +714,7 @@ app.post('/api/convert/:toolType', async (req, res) => {
         </html>
       `;
       
-      const browser = await puppeteer.launch({
-        headless: 'new',
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-      });
+      const browser = await launchPuppeteer();
       const page = await browser.newPage();
       await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
       await page.pdf({

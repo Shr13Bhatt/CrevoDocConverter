@@ -2,7 +2,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-console.log('[Setup] Initializing Python Environment Setup...');
+console.log('[Setup] Initializing Environment Setup...');
 
 const rootDir = path.join(__dirname, '..');
 const venvDir = path.join(rootDir, '.venv');
@@ -11,6 +11,7 @@ const venvPython = isWin ? path.join(venvDir, 'Scripts', 'python.exe') : path.jo
 const venvPip = isWin ? path.join(venvDir, 'Scripts', 'pip.exe') : path.join(venvDir, 'bin', 'pip');
 const sysPy = isWin ? 'python' : 'python3';
 
+// 1. Python environment setup
 try {
   if (!fs.existsSync(venvPython)) {
     console.log(`[Setup] Creating Python virtual environment at .venv using ${sysPy}...`);
@@ -32,4 +33,13 @@ try {
   } catch (fallbackErr) {
     console.error('[Setup Error] Global user pip install also failed:', fallbackErr.message);
   }
+}
+
+// 2. Puppeteer browser binary installation
+console.log('[Setup] Installing Chrome browser binary for Puppeteer...');
+try {
+  execSync('npx puppeteer browsers install chrome', { stdio: 'inherit', cwd: rootDir });
+  console.log('[Setup] Chrome browser binary successfully installed!');
+} catch (chromeErr) {
+  console.error('[Setup Warning] Could not install Chrome via npx puppeteer:', chromeErr.message);
 }

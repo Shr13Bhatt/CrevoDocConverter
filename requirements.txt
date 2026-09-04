@@ -3,3 +3,5 @@ python-docx
 python-pptx
 Pillow
 pdf2docx
+aspose-words
+aspose-slides
