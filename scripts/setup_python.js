@@ -6,10 +6,14 @@ console.log('[Setup] Initializing Environment Setup...');
 
 const rootDir = path.join(__dirname, '..');
 const venvDir = path.join(rootDir, '.venv');
+const cacheDir = path.join(rootDir, '.cache', 'puppeteer');
 const isWin = process.platform === 'win32';
 const venvPython = isWin ? path.join(venvDir, 'Scripts', 'python.exe') : path.join(venvDir, 'bin', 'python');
 const venvPip = isWin ? path.join(venvDir, 'Scripts', 'pip.exe') : path.join(venvDir, 'bin', 'pip');
 const sysPy = isWin ? 'python' : 'python3';
+
+// Set PUPPETEER_CACHE_DIR to local project .cache directory
+process.env.PUPPETEER_CACHE_DIR = cacheDir;
 
 // 1. Python environment setup
 try {
@@ -35,10 +39,10 @@ try {
   }
 }
 
-// 2. Puppeteer browser binary installation
-console.log('[Setup] Installing Chrome browser binary for Puppeteer...');
+// 2. Puppeteer browser binary installation into local project .cache directory
+console.log(`[Setup] Installing Chrome browser binary to ${cacheDir}...`);
 try {
-  execSync('npx puppeteer browsers install chrome', { stdio: 'inherit', cwd: rootDir });
+  execSync('npx puppeteer browsers install chrome', { stdio: 'inherit', cwd: rootDir, env: process.env });
   console.log('[Setup] Chrome browser binary successfully installed!');
 } catch (chromeErr) {
   console.error('[Setup Warning] Could not install Chrome via npx puppeteer:', chromeErr.message);

@@ -18,6 +18,12 @@ const os = require('os');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Configure Puppeteer cache dir to local project path
+const projectCacheDir = path.join(__dirname, '../.cache/puppeteer');
+if (!process.env.PUPPETEER_CACHE_DIR) {
+  process.env.PUPPETEER_CACHE_DIR = projectCacheDir;
+}
+
 // Setup directories (use system temp dir in serverless environment)
 const isServerless = !!(process.env.VERCEL || process.env.LAMBDA_TASK_ROOT);
 const baseDir = isServerless ? os.tmpdir() : path.join(__dirname, '..');
@@ -128,9 +134,33 @@ async function launchPuppeteer() {
     args: launchArgs
   };
 
-  if (process.env.PUPPETEER_EXECUTABLE_PATH && fs.existsSync(process.env.PUPPETEER_EXECUTABLE_PATH)) {
+  // Check project local .cache directory for installed Chrome
+  const projectCacheDir = path.join(__dirname, '../.cache/puppeteer');
+  if (fs.existsSync(projectCacheDir)) {
+    const findChromeExe = (dir) => {
+      if (!fs.existsSync(dir)) return null;
+      const entries = fs.readdirSync(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          const res = findChromeExe(fullPath);
+          if (res) return res;
+        } else if (entry.name === 'chrome' || entry.name === 'chrome.exe') {
+          return fullPath;
+        }
+      }
+      return null;
+    };
+    const localChrome = findChromeExe(projectCacheDir);
+    if (localChrome) {
+      console.log(`[Puppeteer] Found project cached Chrome binary at: ${localChrome}`);
+      options.executablePath = localChrome;
+    }
+  }
+
+  if (!options.executablePath && process.env.PUPPETEER_EXECUTABLE_PATH && fs.existsSync(process.env.PUPPETEER_EXECUTABLE_PATH)) {
     options.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
-  } else {
+  } else if (!options.executablePath) {
     const candidatePaths = [
       '/usr/bin/chromium',
       '/usr/bin/chromium-browser',
