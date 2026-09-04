@@ -18,13 +18,29 @@ function toggleTheme() {
   localStorage.setItem('theme', newTheme);
   
   // Update toggle button icon/text
-  const toggleBtn = document.querySelector('.theme-toggle-btn');
-  if (toggleBtn) {
-    toggleBtn.innerHTML = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+  const toggleBtns = document.querySelectorAll('.theme-toggle-btn');
+  toggleBtns.forEach(btn => {
+    btn.innerHTML = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+  });
+}
+
+// Mobile Menu Drawer Toggle
+function toggleMobileMenu() {
+  const navMenu = document.getElementById('nav-menu');
+  const toggleBtn = document.getElementById('mobile-toggle-btn');
+  if (!navMenu) return;
+
+  const isOpen = navMenu.classList.contains('mobile-active');
+  if (isOpen) {
+    navMenu.classList.remove('mobile-active');
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+  } else {
+    navMenu.classList.add('mobile-active');
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
   }
 }
 
-// Dynamically Render Header
+// Dynamically Render Header with Responsive Mobile Navigation
 function renderHeader() {
   const headerRoot = document.getElementById('header-root');
   if (!headerRoot) return;
@@ -38,12 +54,22 @@ function renderHeader() {
         <a href="/" class="logo-link">
           <img src="/logo.png" alt="CrevoDoc Logo" class="logo-img" />
         </a>
-        <nav class="nav-menu">
-          <a href="/" class="nav-link" id="nav-home">Home</a>
-          <a href="/all-tools" class="nav-link" id="nav-tools">All Tools</a>
-          <a href="/#how-it-works" class="nav-link">About</a>
-          <a href="/#faq" class="nav-link">FAQ</a>
-          <button class="theme-toggle-btn" onclick="toggleTheme()">
+        
+        <div class="header-right-actions">
+          <button class="theme-toggle-btn header-theme-btn" onclick="toggleTheme()">
+            ${toggleText}
+          </button>
+          <button class="mobile-toggle-btn" id="mobile-toggle-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+
+        <nav class="nav-menu" id="nav-menu">
+          <a href="/" class="nav-link" id="nav-home" onclick="toggleMobileMenu()">Home</a>
+          <a href="/all-tools" class="nav-link" id="nav-tools" onclick="toggleMobileMenu()">All Tools</a>
+          <a href="/#how-it-works" class="nav-link" onclick="toggleMobileMenu()">About</a>
+          <a href="/#faq" class="nav-link" onclick="toggleMobileMenu()">FAQ</a>
+          <button class="theme-toggle-btn nav-theme-btn" onclick="toggleTheme()">
             ${toggleText}
           </button>
         </nav>
@@ -63,8 +89,8 @@ function renderFooter() {
     <footer class="footer">
       <div class="container footer-container">
         <div>
-          <a href="/" class="logo-link" style="margin-bottom: 8px;">
-            <img src="/logo.png" alt="CrevoDoc Logo" class="logo-img" style="height: 45px;" />
+          <a href="/" class="logo-link" style="margin-bottom: 12px; display: inline-flex;">
+            <img src="/logo.png" alt="CrevoDoc Logo" class="logo-img" style="height: 44px;" />
           </a>
           <p class="copyright">&copy; ${year} CrevoDoc. Developed by Shrey Bhatt. All rights reserved.</p>
         </div>
@@ -83,7 +109,6 @@ function renderFooter() {
 // Highlight the current page in the navigation bar
 function highlightActiveLink() {
   const path = window.location.pathname;
-  // Clear any existing active links
   const links = ['nav-home', 'nav-tools'];
   links.forEach(id => {
     const el = document.getElementById(id);
@@ -99,5 +124,6 @@ function highlightActiveLink() {
   }
 }
 
-// Expose theme toggling globally
+// Expose functions globally
 window.toggleTheme = toggleTheme;
+window.toggleMobileMenu = toggleMobileMenu;
