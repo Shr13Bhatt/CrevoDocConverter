@@ -13,15 +13,24 @@ const url = require('url');
 const { fileValidator, cleanupUploadedFiles, CONVERTER_CONFIGS } = require('./middleware');
 const { cleanTempFiles } = require('./cleanup');
 
+const os = require('os');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Setup directories
-const UPLOADS_DIR = path.join(__dirname, '../uploads');
-const DOWNLOADS_DIR = path.join(__dirname, '../downloads');
+// Setup directories (use system temp dir in serverless environment)
+const isServerless = !!(process.env.VERCEL || process.env.LAMBDA_TASK_ROOT);
+const baseDir = isServerless ? os.tmpdir() : path.join(__dirname, '..');
+const UPLOADS_DIR = path.join(baseDir, 'uploads');
+const DOWNLOADS_DIR = path.join(baseDir, 'downloads');
+
 [UPLOADS_DIR, DOWNLOADS_DIR].forEach(dir => {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+  try {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+  } catch (err) {
+    console.error(`[Server] Directory creation failed for ${dir}:`, err);
   }
 });
 
@@ -47,11 +56,19 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Set views directory for rendering the pages
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
-// Helper: Run Python scripts from virtual environment
+// Helper: Resolve cross-platform Python executable
+function getPythonExecutable() {
+  const winVenv = path.join(__dirname, '../.venv/Scripts/python.exe');
+  const nixVenv = path.join(__dirname, '../.venv/bin/python');
+  if (fs.existsSync(winVenv)) return winVenv;
+  if (fs.existsSync(nixVenv)) return nixVenv;
+  return process.platform === 'win32' ? 'python' : 'python3';
+}
+
+// Helper: Run Python scripts from virtual environment or system Python
 function runPythonScript(scriptName, args = []) {
   return new Promise((resolve, reject) => {
-    // Windows virtual env python path
-    const pythonExe = path.join(__dirname, '../.venv/Scripts/python.exe');
+    const pythonExe = getPythonExecutable();
     const scriptPath = path.join(__dirname, '../scripts', scriptName);
     
     console.log(`[Python] Spawning: ${pythonExe} ${scriptPath} ${args.join(' ')}`);
@@ -744,12 +761,14 @@ app.get('/api/download/:filename', (req, res) => {
   });
 });
 
-// Start cleanup background service: Runs every 5 minutes
-setInterval(cleanTempFiles, 5 * 60 * 1000);
-// Run once on startup
-cleanTempFiles();
+// Start cleanup background service: Runs every 5 minutes when running standalone
+if (require.main === module) {
+  setInterval(cleanTempFiles, 5 * 60 * 1000);
+  cleanTempFiles();
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`[Server] CrevoDoc Converter is running at http://localhost:${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log(`[Server] CrevoDoc Converter is running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;

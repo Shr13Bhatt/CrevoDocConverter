@@ -162,9 +162,15 @@ function uploadSingleFile(file) {
       } else {
         try {
           const res = JSON.parse(xhr.responseText);
-          showError(res.error || 'Server upload failed.');
+          showError(res.error || `Server upload failed (${xhr.status}).`);
         } catch {
-          showError('We couldn\'t connect to the server. Please try again.');
+          if (xhr.status === 404) {
+            showError('API endpoint not found (404). Please ensure backend API routes are configured.');
+          } else if (xhr.status >= 500) {
+            showError(`Server error (${xhr.status}). Please check server logs.`);
+          } else {
+            showError('We couldn\'t connect to the server. Please try again.');
+          }
         }
       }
       resolve();
@@ -222,9 +228,15 @@ function uploadMultipleFiles(files) {
       } else {
         try {
           const res = JSON.parse(xhr.responseText);
-          showError(res.error || 'Server upload failed.');
+          showError(res.error || `Server upload failed (${xhr.status}).`);
         } catch {
-          showError('We couldn\'t upload your files.');
+          if (xhr.status === 404) {
+            showError('API endpoint not found (404). Please ensure backend API routes are configured.');
+          } else if (xhr.status >= 500) {
+            showError(`Server error (${xhr.status}). Please check server logs.`);
+          } else {
+            showError('We couldn\'t upload your files.');
+          }
         }
       }
       resolve();
