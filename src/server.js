@@ -73,7 +73,20 @@ function runPythonScript(scriptName, args = []) {
     
     console.log(`[Python] Spawning: ${pythonExe} ${scriptPath} ${args.join(' ')}`);
     
-    const pyProcess = spawn(pythonExe, [scriptPath, ...args]);
+    const env = { ...process.env };
+    if (process.platform === 'linux') {
+      const home = os.homedir();
+      const userSites = [
+        path.join(home, '.local/lib/python3.10/site-packages'),
+        path.join(home, '.local/lib/python3.11/site-packages'),
+        path.join(home, '.local/lib/python3.12/site-packages'),
+        path.join(home, '.local/lib/python3.9/site-packages'),
+        path.join(home, '.local/lib/python3.8/site-packages')
+      ];
+      env.PYTHONPATH = userSites.join(':') + (env.PYTHONPATH ? ':' + env.PYTHONPATH : '');
+    }
+
+    const pyProcess = spawn(pythonExe, [scriptPath, ...args], { env });
     
     let stdout = '';
     let stderr = '';

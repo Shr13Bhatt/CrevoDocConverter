@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node src/server.js",
-    "postinstall": "pip3 install -r requirements.txt || pip install -r requirements.txt || true"
+    "postinstall": "python3 -m pip install --user -r requirements.txt || pip3 install --user -r requirements.txt || pip3 install -r requirements.txt || true"
   },
   "dependencies": {
     "express": "^4.19.2",
