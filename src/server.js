@@ -699,7 +699,7 @@ app.post('/api/convert/:toolType', async (req, res) => {
 
   } catch (error) {
     console.error(`[Conversion Error] ${toolType} failed:`, error);
-    res.status(500).json({ error: 'An error occurred during file conversion. Please verify the file structure and try again.' });
+    res.status(500).json({ error: error.message || 'An error occurred during file conversion. Please verify the file structure and try again.' });
   } finally {
     // Delete the original uploaded file from /uploads immediately after conversion to preserve storage
     try {
