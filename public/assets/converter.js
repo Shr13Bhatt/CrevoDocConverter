@@ -432,8 +432,12 @@ async function startConversion() {
         showError(result.error || 'Conversion process failed.');
       }
     } else {
-      const err = await res.json();
-      showError(err.error || 'Conversion failed. Please verify files are correct.');
+      try {
+        const err = await res.json();
+        showError(err.error || 'Conversion failed. Please verify files are correct.');
+      } catch {
+        showError(`Server error (${res.status}). Conversion failed.`);
+      }
     }
   } catch (err) {
     clearInterval(progressInterval);

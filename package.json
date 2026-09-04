@@ -5,7 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node src/server.js"
+    "dev": "node src/server.js",
+    "postinstall": "pip3 install -r requirements.txt || pip install -r requirements.txt || true"
   },
   "dependencies": {
     "express": "^4.19.2",
