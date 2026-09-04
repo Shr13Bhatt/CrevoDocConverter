@@ -18,10 +18,10 @@ function toggleTheme() {
   localStorage.setItem('theme', newTheme);
   
   // Update toggle button icon/text
-  const toggleBtns = document.querySelectorAll('.theme-toggle-btn');
-  toggleBtns.forEach(btn => {
-    btn.innerHTML = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
-  });
+  const toggleBtn = document.querySelector('.theme-toggle-btn');
+  if (toggleBtn) {
+    toggleBtn.innerHTML = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+  }
 }
 
 // Mobile Menu Drawer Toggle
@@ -40,7 +40,14 @@ function toggleMobileMenu() {
   }
 }
 
-// Dynamically Render Header with Responsive Mobile Navigation
+function closeMobileMenu() {
+  const navMenu = document.getElementById('nav-menu');
+  if (navMenu && navMenu.classList.contains('mobile-active')) {
+    navMenu.classList.remove('mobile-active');
+  }
+}
+
+// Dynamically Render Header with Single Theme Button
 function renderHeader() {
   const headerRoot = document.getElementById('header-root');
   if (!headerRoot) return;
@@ -54,25 +61,22 @@ function renderHeader() {
         <a href="/" class="logo-link">
           <img src="/logo.png" alt="CrevoDoc Logo" class="logo-img" />
         </a>
-        
+
+        <nav class="nav-menu" id="nav-menu">
+          <a href="/" class="nav-link" id="nav-home" onclick="closeMobileMenu()">Home</a>
+          <a href="/all-tools" class="nav-link" id="nav-tools" onclick="closeMobileMenu()">All Tools</a>
+          <a href="/#how-it-works" class="nav-link" onclick="closeMobileMenu()">About</a>
+          <a href="/#faq" class="nav-link" onclick="closeMobileMenu()">FAQ</a>
+        </nav>
+
         <div class="header-right-actions">
-          <button class="theme-toggle-btn header-theme-btn" onclick="toggleTheme()">
+          <button class="theme-toggle-btn" onclick="toggleTheme()">
             ${toggleText}
           </button>
           <button class="mobile-toggle-btn" id="mobile-toggle-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
         </div>
-
-        <nav class="nav-menu" id="nav-menu">
-          <a href="/" class="nav-link" id="nav-home" onclick="toggleMobileMenu()">Home</a>
-          <a href="/all-tools" class="nav-link" id="nav-tools" onclick="toggleMobileMenu()">All Tools</a>
-          <a href="/#how-it-works" class="nav-link" onclick="toggleMobileMenu()">About</a>
-          <a href="/#faq" class="nav-link" onclick="toggleMobileMenu()">FAQ</a>
-          <button class="theme-toggle-btn nav-theme-btn" onclick="toggleTheme()">
-            ${toggleText}
-          </button>
-        </nav>
       </div>
     </header>
   `;
@@ -106,7 +110,7 @@ function renderFooter() {
   footerRoot.innerHTML = footerHtml;
 }
 
-// Highlight the current page in the navigation bar
+// Highlight current active page link
 function highlightActiveLink() {
   const path = window.location.pathname;
   const links = ['nav-home', 'nav-tools'];
@@ -127,3 +131,4 @@ function highlightActiveLink() {
 // Expose functions globally
 window.toggleTheme = toggleTheme;
 window.toggleMobileMenu = toggleMobileMenu;
+window.closeMobileMenu = closeMobileMenu;
