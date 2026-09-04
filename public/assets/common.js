@@ -17,11 +17,12 @@ function toggleTheme() {
   document.documentElement.setAttribute('data-theme', newTheme);
   localStorage.setItem('theme', newTheme);
   
-  // Update toggle button icon/text
-  const toggleBtn = document.querySelector('.theme-toggle-btn');
-  if (toggleBtn) {
-    toggleBtn.innerHTML = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
-  }
+  // Update theme toggle icons across desktop and mobile
+  const toggleBtns = document.querySelectorAll('.theme-toggle-btn');
+  toggleBtns.forEach(btn => {
+    btn.innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
+    btn.setAttribute('title', newTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+  });
 }
 
 // Mobile Menu Drawer Toggle
@@ -47,13 +48,13 @@ function closeMobileMenu() {
   }
 }
 
-// Dynamically Render Header with Single Theme Button
+// Dynamically Render Header
 function renderHeader() {
   const headerRoot = document.getElementById('header-root');
   if (!headerRoot) return;
 
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-  const toggleText = currentTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+  const toggleIcon = currentTheme === 'dark' ? '☀️' : '🌙';
 
   const headerHtml = `
     <header class="header">
@@ -70,11 +71,11 @@ function renderHeader() {
         </nav>
 
         <div class="header-right-actions">
-          <button class="theme-toggle-btn" onclick="toggleTheme()">
-            ${toggleText}
+          <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle Theme" title="Toggle Theme">
+            ${toggleIcon}
           </button>
           <button class="mobile-toggle-btn" id="mobile-toggle-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
         </div>
       </div>
@@ -94,7 +95,7 @@ function renderFooter() {
       <div class="container footer-container">
         <div>
           <a href="/" class="logo-link" style="margin-bottom: 12px; display: inline-flex;">
-            <img src="/logo.png" alt="CrevoDoc Logo" class="logo-img" style="height: 44px;" />
+            <img src="/logo.png" alt="CrevoDoc Logo" class="logo-img" style="height: 38px;" />
           </a>
           <p class="copyright">&copy; ${year} CrevoDoc. Developed by Shrey Bhatt. All rights reserved.</p>
         </div>
